@@ -1,0 +1,16 @@
+.table,
+.table-rows,
+.table-document {
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding: 1rem;
+}
+.table {
+  margin-left: 1rem;
+}
+.table-document:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+.title {
+  margin-left: 1rem;
+}
