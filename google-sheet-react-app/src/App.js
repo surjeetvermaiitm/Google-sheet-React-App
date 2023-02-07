@@ -1,8 +1,14 @@
 import "./App.css";
 import SheetData from "./SheetData";
+import SheetForm from "./SheetForm";
 
 function App() {
-  return <SheetData />;
+  return (
+    <>
+      <SheetForm />
+      {/* <SheetData /> */}
+    </>
+  );
 }
 
 export default App;
