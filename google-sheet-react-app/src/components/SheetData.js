@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import "./SheetData.css";
 
-const SHEET_ID = "1SDFDKCFCtMuhmVtNq_arw45AS81_WDkQtAGxWjL7NWU";
+// const SHEET_ID = process.env.REACT_APP_SHEET_ID;
+// const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
+
+const SHEET_ID = "111GsFbwylyTka5JkgRm1ZKUrzvvnHgTpr8LDcOBNLYY";
 const ACCESS_TOKEN =
-  "ya29.a0AVvZVsqKX2Z6MGT-evzVDU_xl0OrGdM290PyMW8GUM_enWzTUL_b8w-ezCNdInEhbYttoJfd4PRXYEfleQAFnkvlU4X5BVrVh6Fz9gpu1OdM2xMzbHBJhIIwuKKltdkGq58gv8yr-9BMaB8tOplQchVIQZiEY9EaCgYKAZ4SAQASFQGbdwaIXIKqT5PRamzIMH9cpGnvCQ0166";
+  "ya29.a0AVvZVsrvBQNKJjMdktMsx5YWs0fqwuYF5BeFUh-iFO6NTQ8voCqV_RBYbqJjkiQdexukbhexWdEhUGku4Rfz1ndXJTN86K2X-6mcM7p1WXZlfQITdm99WM-e-kWtfmzdryPS2CD54mocs73spe2dwH0rGw5CFM4aCgYKASISAQASFQGbdwaI-tvazSIrUYrUDjdSsmOnsg0166";
 
 const SheetData = () => {
-  const [sheetData, setSheetData] = useState([]);
+  console.log(SHEET_ID);
+  const [sheetData, setSheetData] = useState([[], []]);
   const getSheetValues = async () => {
     const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A1:F31`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A1:F${100}`,
       {
         // method: "GET",
         // mode: "cors",
@@ -30,7 +34,7 @@ const SheetData = () => {
   useEffect(() => {
     getSheetValues()
       .then((res) => {
-        setSheetData(res);
+        setSheetData(res.values);
       })
       .catch((e) => {
         console.log(e.message);
@@ -38,13 +42,11 @@ const SheetData = () => {
   }, []);
   return (
     <div>
-      {/* {console.log(sheetData.values)} */}
+      {console.log(sheetData)}
       <h1 className="title">Google Sheet API React APP</h1>
-
-      {/* {console.log(sheetData.data)} */}
       <table className="table">
         <tr>
-          {sheetData.values[0].map((key, i) => {
+          {sheetData[0].map((key, i) => {
             return (
               <th className="table-document" key={i}>
                 {key}
@@ -53,7 +55,7 @@ const SheetData = () => {
           })}
         </tr>
 
-        {sheetData.values.slice(1).map((row, i) => {
+        {sheetData.slice(1).map((row, i) => {
           return (
             <tr className="table-row" key={i}>
               {row.map((key, i) => (
