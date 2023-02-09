@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 
 import "./SheetForm.css";
-
+import { SHEET_ID, ACCESS_TOKEN } from "../data/credential";
 // const SHEET_ID = process.env.REACT_APP_SHEET_ID;
 // const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
-
-const SHEET_ID = "111GsFbwylyTka5JkgRm1ZKUrzvvnHgTpr8LDcOBNLYY";
-const ACCESS_TOKEN =
-  "ya29.a0AVvZVsrvBQNKJjMdktMsx5YWs0fqwuYF5BeFUh-iFO6NTQ8voCqV_RBYbqJjkiQdexukbhexWdEhUGku4Rfz1ndXJTN86K2X-6mcM7p1WXZlfQITdm99WM-e-kWtfmzdryPS2CD54mocs73spe2dwH0rGw5CFM4aCgYKASISAQASFQGbdwaI-tvazSIrUYrUDjdSsmOnsg0166";
 
 const SheetForm = () => {
   const [row, setRow] = useState(31);
@@ -28,7 +24,7 @@ const SheetForm = () => {
     }));
   };
   const updateSheetValues = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     const data = Object.values(inputs);
     console.log(data);
     setRow((prev) => prev + 1);
