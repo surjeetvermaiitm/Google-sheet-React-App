@@ -1,21 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./SheetForm.css";
 import { SHEET_ID, ACCESS_TOKEN } from "../data/credential";
 // const SHEET_ID = process.env.REACT_APP_SHEET_ID;
 // const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 
-const SheetForm = () => {
-  const [row, setRow] = useState(31);
-  const [inputs, setInputs] = useState({
-    "Student Name": "",
-    Gender: "",
-    "Class Level": "",
-    "Home State": "",
-    Major: "",
-    "Extracurricular Activity": "",
-  });
-
+const SheetForm = (props) => {
+  const { inputs, setInputs, isRefresh, setIsRefresh, rowLength } = props;
   const handleInputChange = (event) => {
     event.persist();
     setInputs((inputs) => ({
@@ -24,12 +15,12 @@ const SheetForm = () => {
     }));
   };
   const updateSheetValues = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     const data = Object.values(inputs);
-    console.log(data);
-    setRow((prev) => prev + 1);
     const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A${row}:append?valueInputOption=RAW`,
+      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A${
+        rowLength + 1
+      }:append?valueInputOption=RAW`,
       {
         method: "POST",
         headers: {
@@ -47,6 +38,15 @@ const SheetForm = () => {
     if (result.error) {
       console.error(result.error.message);
     } else {
+      setInputs({
+        "Student Name": "",
+        Gender: "",
+        "Class Level": "",
+        "Home State": "",
+        Major: "",
+        "Extracurricular Activity": "",
+      });
+      setIsRefresh(!isRefresh);
       console.log("Data added to Google Sheet successfully!");
     }
   };

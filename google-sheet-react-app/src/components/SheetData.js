@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import "./SheetData.css";
 import { SHEET_ID, ACCESS_TOKEN } from "../data/credential";
@@ -6,11 +6,16 @@ import { SHEET_ID, ACCESS_TOKEN } from "../data/credential";
 // const SHEET_ID = process.env.REACT_APP_SHEET_ID;
 // const ACCESS_TOKEN = process.env.REACT_APP_ACCESS_TOKEN;
 
-const SheetData = () => {
+const SheetData = (props) => {
   // console.log(SHEET_ID);
-  const [sheetData, setSheetData] = useState([[], []]);
-  const [status, setStatus] = useState("Loading...");
-
+  const {
+    sheetData,
+    setSheetData,
+    status,
+    setStatus,
+    isRefresh,
+    setRowLength,
+  } = props;
   const getSheetValues = async () => {
     const response = await fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A1:F${100}`,
@@ -34,13 +39,14 @@ const SheetData = () => {
     getSheetValues()
       .then((res) => {
         setSheetData(res.values);
-        setStatus("Loaded Successful");
+        setRowLength(sheetData.length);
+        setStatus("Data Loaded Successfully");
       })
       .catch((e) => {
         setStatus(e.message + " 404 error");
         console.log(e.message);
       });
-  }, [sheetData]);
+  }, [isRefresh]);
 
   return (
     <div>
